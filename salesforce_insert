@@ -1,0 +1,33 @@
+from simple_salesforce import Salesforce
+
+sf = Salesforce(username='your_username', password='your_password', security_token='your_security_token', domain='login')
+
+# Replace 'CustomObject__c' with the API name of your custom or standard object
+# Prepare your data
+new_record = {
+    'Field1__c': 'Value1',
+    'Field2__c': 'Value2',
+    # Include other fields as needed
+}
+
+# Insert the new record
+try:
+    response = sf.CustomObject__c.create(new_record)
+    if response.get('success'):
+        print(f"Record created successfully. Record Id: {response.get('id')}")
+    else:
+        print("Failed to create record.")
+except Exception as e:
+    print(f"Error: {e}")
+
+In this script:
+
+Replace CustomObject__c with the actual API name of the Salesforce object you're inserting data into.
+The new_record dictionary should contain the data you want to insert, with keys corresponding to the API names of the fields in the Salesforce object.
+The create method is used to insert the new record into Salesforce.
+Important Notes:
+Object and Field API Names: Make sure you use the correct API names for the Salesforce object and its fields. Custom object names typically end in __c, as do custom field names.
+Data Types: Ensure that the data types of the values you are inserting match the data types expected by the Salesforce fields.
+Error Handling: Proper error handling is essential to catch any issues that might occur during the insert operation.
+Salesforce API Limits: Be mindful of Salesforce API limits, especially if you're inserting a large number of records.
+This approach should help you add new data to your desired Salesforce object.
