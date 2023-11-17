@@ -31,3 +31,27 @@ Data Types: Ensure that the data types of the values you are inserting match the
 Error Handling: Proper error handling is essential to catch any issues that might occur during the insert operation.
 Salesforce API Limits: Be mindful of Salesforce API limits, especially if you're inserting a large number of records.
 This approach should help you add new data to your desired Salesforce object.
+
+values_for_field1 = ['Value1', 'Value2', 'Value3']  # List of values to be added to Field1__c
+
+from simple_salesforce import Salesforce
+
+sf = Salesforce(username='your_username', password='your_password', security_token='your_security_token', domain='login')
+
+# Iterate over the list of values
+for value in values_for_field1:
+    new_record = {
+        'Field1__c': value,
+        # You can add other static or dynamic fields here if necessary
+    }
+
+    # Insert the new record
+    try:
+        response = sf.CustomObject__c.create(new_record)
+        if response.get('success'):
+            print(f"Record created successfully. Record Id: {response.get('id')}")
+        else:
+            print("Failed to create record.")
+    except Exception as e:
+        print(f"Error: {e}")
+
